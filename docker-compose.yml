@@ -1,0 +1,14 @@
+version: '3.8'
+
+services:
+  stock-api:
+    image: 'ghcr.io/bilyalove/stock-api:latest'
+    hostname: stock_api
+    ports: 
+      - "8080:80"
+    depends_on:
+      - redis
+  redis:
+    image: 'redis'
+    hostname: redis
+  
