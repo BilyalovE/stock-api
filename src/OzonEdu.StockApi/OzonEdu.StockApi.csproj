@@ -16,4 +16,10 @@
       </Content>
     </ItemGroup>
 
+    <ItemGroup>
+      <ProjectReference Include="..\..\OzonEdu.StockApi.HttpModels\OzonEdu.StockApi.HttpModels.csproj" />
+      <ProjectReference Include="..\OzonEdu.StockApi.HttpClients\OzonEdu.StockApi.HttpClients.csproj" />
+      <ProjectReference Include="..\OzonEdu.StockApi.HttpModels\OzonEdu.StockApi.HttpModels.csproj" />
+    </ItemGroup>
+
 </Project>
