@@ -4,10 +4,12 @@
         <TargetFramework>net9.0</TargetFramework>
         <Nullable>enable</Nullable>
         <ImplicitUsings>enable</ImplicitUsings>
+        <GenerateDocumentationFile>true</GenerateDocumentationFile>
     </PropertyGroup>
 
     <ItemGroup>
         <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="9.0.2"/>
+        <PackageReference Include="Swashbuckle.AspNetCore" Version="7.3.1" />
     </ItemGroup>
 
     <ItemGroup>
@@ -17,9 +19,9 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\..\OzonEdu.StockApi.HttpModels\OzonEdu.StockApi.HttpModels.csproj" />
       <ProjectReference Include="..\OzonEdu.StockApi.HttpClients\OzonEdu.StockApi.HttpClients.csproj" />
       <ProjectReference Include="..\OzonEdu.StockApi.HttpModels\OzonEdu.StockApi.HttpModels.csproj" />
     </ItemGroup>
+    
 
 </Project>

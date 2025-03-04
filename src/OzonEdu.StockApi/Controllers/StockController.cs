@@ -18,6 +18,11 @@ public class StockController : ControllerBase
         _stockService = stockService;
     }
 
+    /// <summary>
+    /// Возвращает все сущности
+    /// </summary>
+    /// <param name="token"></param>
+    /// <returns></returns>
     [HttpGet]
     public async Task<ActionResult<List<StockItem>>> GetAll(CancellationToken token)
     {
