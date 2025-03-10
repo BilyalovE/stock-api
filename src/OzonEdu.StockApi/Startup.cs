@@ -12,7 +12,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.OpenApi.Models;
 using OzonEdu.StockApi.HttpClients;
 using OzonEdu.StockApi.Services;
-using OzonEdu.StockApi.Configuration.Middlewares;
+
 
 
 namespace OzonEdu.StockApi
@@ -32,11 +32,8 @@ namespace OzonEdu.StockApi
         // Здесь мы регистрируем все сервисы, которые будут использоваться при обработке запроса
         public void ConfigureServices(IServiceCollection services)
         {
-            
-            // Регистрируем поддержку API-контроллеров в ASP.NET Core.  
-            services.AddControllers();
-            services.AddSingleton<IStockService, StockService>();
-
+            // По сути здесь должна регистрироваться только бизнес логика и все 
+            services.AddSingleton<IStockService, StockService>(); 
             services.AddHttpClient<IStockApiHttpClient, StockApiHttpClient>();
         }
 
@@ -45,10 +42,6 @@ namespace OzonEdu.StockApi
         public void Configure(IApplicationBuilder app)
         {
             
-            app.Map("/version", builder => builder.UseMiddleware<VersionMiddlewares>());
-            app.UseMiddleware<RequestLoggingMiddlewares>();
-          
-
             // это middleware в ASP.NET Core, который включает систему маршрутизации
             // и определяет, какой обработчик (endpoint) должен обработать входящий HTTP-запрос.
             

@@ -1,23 +1,13 @@
 using Microsoft.OpenApi.Models;
 using System.Reflection;
+using OzonEdu.StockApi.Infrastructure.StartupFilters;
+using OzonEdu.StockApi.Infrastructure.Filters;
 
 
-namespace OzonEdu.StockApi.Infrastructure;
 
-public class SwaggerStartupFilter : IStartupFilter
-{
-    public Action<IApplicationBuilder> Configure(Action<IApplicationBuilder> next)
-    {
-        return app =>
-        {
-            app.UseSwagger();
-            app.UseSwaggerUI();
-            next(app);
-        };
-    }
-}
+namespace OzonEdu.StockApi.Infrastructure.Extensions;
 
-public static class HostBuilderExtensions
+public static partial class HostBuilderExtensions
 {
     public static IHostBuilder AddInfrastructure(this IHostBuilder builder)
     {
@@ -39,6 +29,16 @@ public static class HostBuilderExtensions
                 // Используй OperationFilter 
                 options.OperationFilter<HeaderOperationFilter>();
             });
+        });
+        return builder;
+    }
+    
+    public static IHostBuilder AddHttp(this IHostBuilder builder)
+    {
+        builder.ConfigureServices(services =>
+        {
+            // Регистрируем поддержку API-контроллеров в ASP.NET Core.  
+            services.AddControllers(options => options.Filters.Add<GlobalExceptionFilter>());
         });
         return builder;
     }
