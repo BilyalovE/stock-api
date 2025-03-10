@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Hosting;
 // Инфраструктура для управления жизненным циклом приложения
 using Microsoft.Extensions.Hosting;
 using OzonEdu.StockApi;
+using OzonEdu.StockApi.Infrastructure;
 
 
 CreateHostBuilder(args).Build().Run(); 
