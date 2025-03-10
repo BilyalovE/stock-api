@@ -45,6 +45,8 @@ public class StockController : ControllerBase
     [HttpPost]
     public async Task<ActionResult<StockItem>> Add(StockItemModel model, CancellationToken token)
     {
+        throw new CustomException();
+        
         var createdStockItem = await _stockService.Add(new StockItemCreationModel
         {
             ItemName = model.ItemName,
@@ -52,4 +54,12 @@ public class StockController : ControllerBase
         }, token);
         return Ok(createdStockItem);
     }
+
+    public class CustomException : Exception
+    {
+        public CustomException() : base("some error")
+        {
+        }
+    }
 }
+
