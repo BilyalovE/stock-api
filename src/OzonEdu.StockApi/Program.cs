@@ -6,8 +6,9 @@ using Microsoft.Extensions.Hosting;
 using OzonEdu.StockApi;
 
 
-CreateHostBuilder(args).Build().Run();
+CreateHostBuilder(args).Build().Run(); 
 
 static IHostBuilder CreateHostBuilder(string[] args)
     => Host.CreateDefaultBuilder(args).ConfigureWebHostDefaults(
-        webBuilder => { webBuilder.UseStartup<Startup>(); });
+        webBuilder => { webBuilder.UseStartup<Startup>(); })
+        .AddInfrastructure();
