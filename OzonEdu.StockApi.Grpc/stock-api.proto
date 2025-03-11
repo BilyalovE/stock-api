@@ -1,0 +1,68 @@
+syntax = "proto3";
+option csharp_namespace = "OzonEdu.StockApi.Grpc";
+
+// namespace внутри proro- файла
+package StockApi;
+
+// если нужен пустой message
+import "google/protobuf/empty.proto";
+
+// если нужно передавать null
+import "google/protobuf/wrappers.proto";
+ 
+service StockApiGrpc{
+  // метод (каждый метод обязательно должен что-то принимать на вход и отдавать на выход)
+  rpc GetAllStockItems(GetAllApiRequest) returns (GetAllApiResponce);
+  
+  rpc GetAllStockItemsV2(google.protobuf.Empty) returns (GetAllApiResponce);
+
+  rpc GetAllStockItemsWithNulls(google.protobuf.Empty) returns (GetAllWithNullsApiResponce);
+  
+  rpc GetAllStockItemsMap(google.protobuf.Empty) returns (GetAllStockItemsMapResponce);
+  
+  rpc AddStockItem(AddStockItemRequest) returns (google.protobuf.Empty);
+  
+  // 
+  // возвращаем стрим товаров
+  rpc GetAllStockItemsStreaming(GetAllApiRequest)  returns (stream GetAllStockApiResponseUnit);
+  
+  rpc AddStockItemsStreaming(stream AddStockItemRequest) returns (google.protobuf.Empty);  
+}
+ 
+// Создаем модельки
+message GetAllApiRequest{
+  
+}
+
+message GetAllApiResponce{
+  repeated GetAllStockApiResponseUnit stocks = 1;
+}
+
+// базовая модель 
+message GetAllStockApiResponseUnit { 
+  int64 item_id = 1;
+  string item_name = 2;
+  int32 quantity = 3;
+}
+
+message GetAllWithNullsApiResponce{
+  repeated GetAllStockWithNullApiResponseUnit stocks = 1;
+}
+
+// специальные обертки над полями для передачи null
+message GetAllStockWithNullApiResponseUnit {
+  int64 item_id = 1;
+  google.protobuf.StringValue item_name = 2;
+  google.protobuf.Int32Value quantity = 3;
+}
+
+message GetAllStockItemsMapResponce{
+  map<int64, GetAllStockApiResponseUnit> stocks = 1;
+}
+
+message AddStockItemRequest{
+  string item_name = 1;
+  int32 quantity = 2;
+}
+    
+

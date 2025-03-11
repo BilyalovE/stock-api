@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using OzonEdu.StockApi.Services;
+using OzonEdu.StockApi.Services.Interfaces;
 using OzonEdu.StockApi.HttpModels;
 using System.Threading.Tasks;
 using System.Collections.Generic;
