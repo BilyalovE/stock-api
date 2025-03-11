@@ -10,6 +10,7 @@ namespace OzonEdu.StockApi.Configuration.Middlewares;
 public class RequestLoggingMiddlewares
 {
     private readonly RequestDelegate _next;
+
     // Встроенный логгер в ASP NET Core
     private readonly ILogger<RequestLoggingMiddlewares> _logger;
 
@@ -47,10 +48,11 @@ public class RequestLoggingMiddlewares
         }
         catch (Exception e)
         {
-            _logger.LogError(e,  "could not log request");
+            _logger.LogError(e, "could not log request");
         }
     }
-  
+}
+
 public class LoggingInterceptor : Interceptor
 {
     private readonly ILogger<RequestLoggingMiddlewares> _logger;
@@ -59,17 +61,19 @@ public class LoggingInterceptor : Interceptor
     {
         _logger = logger;
     }
-    public override Task<TResponse> UnaryServerHandler<TRequest, TResponse>(TRequest request, ServerCallContext context,
+
+    public override Task<TResponse> UnaryServerHandler<TRequest, TResponse>(TRequest request,
+        ServerCallContext context,
         UnaryServerMethod<TRequest, TResponse> continuation)
     {
         var requestJson = JsonSerializer.Serialize(request);
         _logger.LogInformation(requestJson);
-        
+
         var responce = base.UnaryServerHandler(request, context, continuation);
-        
+
         var responceJson = JsonSerializer.Serialize(responce);
         _logger.LogInformation(responceJson);
-        
-        return responce; 
+
+        return responce;
     }
 }
