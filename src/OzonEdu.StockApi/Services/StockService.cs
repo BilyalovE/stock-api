@@ -1,12 +1,7 @@
 using OzonEdu.StockApi.HttpModels;
+using OzonEdu.StockApi.Services.Interfaces;
 
 namespace OzonEdu.StockApi.Services;
-public interface IStockService
-{
-    Task<List<StockItem>> GetAll(CancellationToken token);
-    public Task<StockItem> GetById(long itemId, CancellationToken _);
-    public Task<StockItem> Add(StockItemCreationModel stockItem, CancellationToken token);
-}
 
 public class StockService : IStockService
 {

@@ -10,8 +10,11 @@ using Microsoft.Extensions.Configuration;
 // Нужно, чтобы управлять зависимостями через контейнер сервисов.
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.OpenApi.Models;
+using OzonEdu.StockApi.Configuration.Middlewares;
 using OzonEdu.StockApi.HttpClients;
 using OzonEdu.StockApi.Services;
+using OzonEdu.StockApi.Services.Interfaces;
+using OzonEdu.StockApi.GrpcServices;
 
 
 
@@ -35,6 +38,7 @@ namespace OzonEdu.StockApi
             // По сути здесь должна регистрироваться только бизнес логика и все 
             services.AddSingleton<IStockService, StockService>(); 
             services.AddHttpClient<IStockApiHttpClient, StockApiHttpClient>();
+            services.AddGrpc(options => options.Interceptors.Add<LoggingInterceptor>());
         }
 
         // Здесь мы конфигурируем само приложение, в данном случае пайплайн обработки запроса
@@ -48,7 +52,12 @@ namespace OzonEdu.StockApi
             app.UseRouting();
             // app.UseEndpoints(...) — включает маршрутизацию и указывает, какие конечные точки (endpoints) будут доступны.
             // endpoints.MapControllers(); — включает API-контроллеры, зарегистрированные в проекте.
-            app.UseEndpoints(endpoints => { endpoints.MapControllers(); });
+            app.UseEndpoints(endpoints =>
+            {
+                endpoints.MapControllers();
+                endpoints.MapGrpcService<StockApiGrpcService>();
+            });
+            
         }
     }
 }

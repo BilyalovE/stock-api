@@ -1,5 +1,8 @@
 
 using System.Text;
+using System.Text.Json;
+using Grpc.Core;
+using Grpc.Core.Interceptors;
 using Microsoft.AspNetCore.Identity.Data;
 
 namespace OzonEdu.StockApi.Configuration.Middlewares;
@@ -47,4 +50,27 @@ public class RequestLoggingMiddlewares
             _logger.LogError(e,  "could not log request");
         }
     }
-} 
+}
+
+public class LoggingInterceptor : Interceptor
+{
+    private readonly ILogger<RequestLoggingMiddlewares> _logger;
+
+    public LoggingInterceptor(ILogger<RequestLoggingMiddlewares> logger)
+    {
+        _logger = logger;
+    }
+    public override Task<TResponse> UnaryServerHandler<TRequest, TResponse>(TRequest request, ServerCallContext context,
+        UnaryServerMethod<TRequest, TResponse> continuation)
+    {
+        var requestJson = JsonSerializer.Serialize(request);
+        _logger.LogInformation(requestJson);
+        
+        var responce = base.UnaryServerHandler(request, context, continuation);
+        
+        var responceJson = JsonSerializer.Serialize(responce);
+        _logger.LogInformation(responceJson);
+        
+        return responce; 
+    }
+}

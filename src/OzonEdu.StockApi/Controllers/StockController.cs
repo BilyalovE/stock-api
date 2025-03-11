@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using OzonEdu.StockApi.Services;
+using OzonEdu.StockApi.Services.Interfaces;
 using OzonEdu.StockApi.HttpModels;
 using System.Threading.Tasks;
 using System.Collections.Generic;
@@ -55,11 +56,11 @@ public class StockController : ControllerBase
         return Ok(createdStockItem);
     }
 
-    // public class CustomException : Exception
-    // {
-    //     public CustomException() : base("some error")
-    //     {
-    //     }
-    // }
+    public class CustomException : Exception
+    {
+        public CustomException() : base("some error")
+        {
+        }
+    }
 }
 
