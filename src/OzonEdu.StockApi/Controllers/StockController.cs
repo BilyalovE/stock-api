@@ -56,11 +56,11 @@ public class StockController : ControllerBase
         return Ok(createdStockItem);
     }
 
-    public class CustomException : Exception
-    {
-        public CustomException() : base("some error")
-        {
-        }
-    }
+    // public class CustomException : Exception
+    // {
+    //     public CustomException() : base("some error")
+    //     {
+    //     }
+    // }
 }
 

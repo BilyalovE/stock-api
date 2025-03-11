@@ -26,5 +26,3 @@ static IHostBuilder CreateHostBuilder(string[] args)
             })
         .AddInfrastructure()
         .AddHttp();
-        
-        

@@ -50,8 +50,7 @@ public class RequestLoggingMiddlewares
             _logger.LogError(e,  "could not log request");
         }
     }
-}
-
+  
 public class LoggingInterceptor : Interceptor
 {
     private readonly ILogger<RequestLoggingMiddlewares> _logger;
